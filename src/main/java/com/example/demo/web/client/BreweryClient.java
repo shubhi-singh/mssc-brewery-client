@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.UUID;
 
 @Component
@@ -29,6 +30,18 @@ public class BreweryClient {
     {
         BeerDto beerDto = restTemplate.getForObject(apihost + BEER_PATH_V1 + beerId.toString(), BeerDto.class);
         return beerDto;
+    }
+    public URI saveNewBeer(BeerDto beerDto)
+    {
+        return restTemplate.postForLocation(apihost + BEER_PATH_V1, beerDto);
+    }
+    public void updateBeer(UUID beerId, BeerDto beerDto)
+    {
+        restTemplate.put(apihost + BEER_PATH_V1 + beerId.toString(), beerDto);
+    }
+    public void deleteBeer(UUID beerId)
+    {
+        restTemplate.delete(apihost + BEER_PATH_V1 + beerId.toString());
     }
 
 
